@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1026" />
+  <title>松弥 Matsumi｜ANNYX Fan Site</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b1026;
+      --bg2: #10183a;
+      --card: rgba(23, 30, 66, .82);
+      --card-solid: #171e42;
+      --purple: #c3b2ff;
+      --purple-deep: #8b78dc;
+      --pink: #f5a8d0;
+      --pink-deep: #d96ca5;
+      --white: #e8e2ff;
+      --muted: #b3bce0;
+      --dim: #737da8;
+      --line: rgba(195, 178, 255, .22);
+      --shadow: 0 0 28px rgba(195, 178, 255, .2);
+      --radius: 14px;
+      --pixel: "Press Start 2P", monospace;
+      --body: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      color: var(--white);
+      font-family: var(--body);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(115, 86, 205, .25), transparent 24%),
+        radial-gradient(circle at 86% 30%, rgba(219, 103, 165, .16), transparent 25%),
+        linear-gradient(135deg, #0b1026, #11173a 50%, #0b1026);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: .6;
+      background-image:
+        radial-gradient(circle, white 0 1px, transparent 1.5px),
+        radial-gradient(circle, #c3b2ff 0 1px, transparent 1.5px),
+        radial-gradient(circle, #f5a8d0 0 1px, transparent 1.5px);
+      background-size: 130px 150px, 210px 220px, 280px 260px;
+      background-position: 10px 30px, 60px 80px, 120px 40px;
+      animation: starMove 24s linear infinite;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -25%;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at center, transparent 30%, rgba(102, 75, 180, .13) 55%, transparent 70%);
+      animation: nebula 18s ease-in-out infinite alternate;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .pixel {
+      font-family: var(--pixel);
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      background: rgba(11, 16, 38, .82);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      color: var(--purple);
+      font-family: var(--pixel);
+      font-size: 12px;
+      white-space: nowrap;
+      text-shadow: 0 0 12px rgba(195, 178, 255, .8);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn,
+    .menu-btn {
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--white);
+      background: rgba(195, 178, 255, .08);
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .icon-btn:hover,
+    .menu-btn:hover {
+      color: var(--pink);
+      box-shadow: var(--shadow);
+    }
+
+    .page {
+      width: min(1050px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 91px 0 92px;
+    }
+
+    .view {
+      display: none;
+      animation: pageIn .6s ease both;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .section-head {
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      margin-bottom: 10px;
+      color: var(--pink);
+      font-family: var(--pixel);
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.4;
+    }
+
+    h1 {
+      color: var(--white);
+      font-size: clamp(28px, 7vw, 54px);
+    }
+
+    h2 {
+      color: var(--purple);
+      font-size: clamp(21px, 5vw, 34px);
+    }
+
+    h3 {
+      color: var(--white);
+      font-size: 17px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .card {
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border: 1px solid rgba(195, 178, 255, .4);
+      border-radius: 999px;
+      color: var(--white);
+      background: linear-gradient(135deg, rgba(195, 178, 255, .25), rgba(245, 168, 208, .2));
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 20px rgba(195, 178, 255, .45);
+      background: linear-gradient(135deg, rgba(195, 178, 255, .4), rgba(245, 168, 208, .28));
+    }
+
+    .btn:active {
+      transform: scale(.94);
+    }
+
+    .btn.pink {
+      border-color: rgba(245, 168, 208, .6);
+      background: linear-gradient(135deg, #d96ca5, #8975db);
+    }
+
+    .hero {
+      min-height: 520px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .hero-copy {
+      padding: 25px 0;
+    }
+
+    .hero-title {
+      margin: 18px 0;
+      font-family: var(--pixel);
+      font-size: clamp(31px, 7vw, 65px);
+      line-height: 1.45;
+      color: var(--purple);
+      text-shadow: 0 0 20px rgba(195, 178, 255, .5);
+    }
+
+    .hero-title span {
+      display: block;
+      color: var(--pink);
+      font-size: .55em;
+    }
+
+    .slogan {
+      margin-bottom: 18px;
+      color: var(--white);
+      font-family: serif;
+      font-size: clamp(22px, 4vw, 36px);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .hero-photo {
+      min-height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(195, 178, 255, .2), rgba(245, 168, 208, .16)),
+        url("images/1.jpg") center/cover;
+      box-shadow: 0 0 45px rgba(195, 178, 255, .28);
+    }
+
+    .hero-photo img {
+      height: 100%;
+      min-height: 440px;
+      object-fit: cover;
+      mix-blend-mode: normal;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 25px 0;
+    }
+
+    .stat {
+      padding: 16px 10px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(23, 30, 66, .66);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--pink);
+      font-family: var(--pixel);
+      font-size: 18px;
+    }
+
+    .stat small {
+      display: block;
+      margin-top: 8px;
+      color: var(--dim);
+      font-size: 11px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .quick-card {
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--white);
+      background: rgba(23, 30, 66, .7);
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-4px);
+      color: var(--pink);
+      box-shadow: var(--shadow);
+    }
+
+    .quick-card .emoji {
+      font-size: 27px;
+    }
+
+    .quick-card span:last-child {
+      font-size: 12px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 18px;
+    }
+
+    .profile-photo {
+      min-height: 430px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: url("images/2.jpg") center/cover;
+    }
+
+    .profile-photo img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .info-item {
+      padding: 13px;
+      border-radius: 10px;
+      background: rgba(195, 178, 255, .08);
+    }
+
+    .info-item b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--pink);
+      font-size: 12px;
+    }
+
+    .info-item span {
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .quote {
+      margin-top: 20px;
+      padding: 18px;
+      border-left: 3px solid var(--pink);
+      color: var(--white);
+      background: rgba(245, 168, 208, .08);
+      font-family: serif;
+      font-size: 22px;
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 24px;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 5px;
+      width: 2px;
+      background: linear-gradient(var(--purple), var(--pink));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(23, 30, 66, .76);
+      transition: .25s;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      top: 21px;
+      left: -26px;
+      width: 11px;
+      height: 11px;
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 12px var(--pink);
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-date {
+      color: var(--pink);
+      font-family: var(--pixel);
+      font-size: 10px;
+    }
+
+    .timeline-item h3 {
+      margin: 8px 0;
+    }
+
+    .quotes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .quote-card {
+      min-height: 130px;
+      transition: .25s;
+    }
+
+    .quote-card:hover {
+      border-color: var(--purple);
+      box-shadow: var(--shadow);
+    }
+
+    .quote-card p {
+      color: var(--white);
+      font-family: serif;
+      font-size: 19px;
+    }
+
+    .birthday-page {
+      min-height: calc(100vh - 155px);
+      padding: 30px 0 50px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(245, 168, 208, .35), transparent 32%),
+        linear-gradient(145deg, rgba(51, 28, 92, .7), rgba(119, 51, 116, .35));
+    }
+
+    .birthday-head {
+      padding: 35px 18px 18px;
+      text-align: center;
+    }
+
+    .birthday-head h1 {
+      color: var(--pink);
+      font-family: var(--pixel);
+      font-size: clamp(24px, 6vw, 45px);
+      text-shadow: 0 0 18px rgba(245, 168, 208, .7);
+    }
+
+    .countdown-box {
+      max-width: 700px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .countdown-box > p {
+      color: var(--white);
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .countdown-item {
+      padding: 17px 8px;
+      border: 1px solid rgba(245, 168, 208, .38);
+      border-radius: 12px;
+      background: rgba(11, 16, 38, .45);
+    }
+
+    .countdown-item strong {
+      display: block;
+      color: var(--pink);
+      font-family: var(--pixel);
+      font-size: clamp(17px, 4vw, 30px);
+    }
+
+    .countdown-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cake-area {
+      padding: 36px 0 15px;
+      text-align: center;
+    }
+
+    .cake {
+      position: relative;
+      display: inline-block;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .cake:hover {
+      filter: drop-shadow(0 0 25px var(--pink));
+    }
+
+    .cake:active {
+      transform: scale(.9);
+    }
+
+    .cake-icon {
+      display: block;
+      font-size: 110px;
+    }
+
+    .cake-hint {
+      color: var(--pink);
+      font-family: var(--pixel);
+      font-size: 9px;
+    }
+
+    .support-links {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      max-width: 850px;
+      margin: 20px auto 0;
+      padding: 0 16px;
+    }
+
+    .support-links a {
+      padding: 14px 8px;
+      text-align: center;
+      border: 1px solid rgba(245, 168, 208, .35);
+      border-radius: 12px;
+      color: var(--white);
+      background: rgba(11, 16, 38, .36);
+      transition: .2s;
+    }
+
+    .support-links a:hover {
+      color: var(--pink);
+      box-shadow: 0 0 18px rgba(245, 168, 208, .3);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      padding-bottom: 4px;
+    }
+
+    .tab {
+      flex: 0 0 auto;
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .tab.active,
+    .tab:hover {
+      color: var(--white);
+      border-color: var(--purple);
+      background: rgba(195, 178, 255, .18);
+    }
+
+    .album-grid {
+      columns: 3 220px;
+      column-gap: 14px;
+    }
+
+    .photo-card {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card-solid);
+      cursor: pointer;
+      break-inside: avoid;
+      transition: .25s;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .photo-card img {
+      min-height: 160px;
+      object-fit: cover;
+    }
+
+    .photo-caption {
+      padding: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .floating-submit {
+      position: fixed;
+      z-index: 8;
+      right: 20px;
+      bottom: 78px;
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      color: #17112d;
+      background: var(--pink);
+      box-shadow: 0 0 25px rgba(245, 168, 208, .5);
+      cursor: pointer;
+      font-size: 23px;
+    }
+
+    .blessing-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      color: var(--white);
+      background: rgba(11, 16, 38, .55);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 15px rgba(195, 178, 255, .25);
+    }
+
+    .blessing-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .blessing-card {
+      animation: pageIn .45s ease both;
+    }
+
+    .blessing-card strong {
+      color: var(--pink);
+    }
+
+    .blessing-card time {
+      display: block;
+      margin-top: 8px;
+      color: var(--dim);
+      font-size: 12px;
+    }
+
+    .star-map {
+      position: relative;
+      min-height: 440px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at center, rgba(91, 72, 171, .32), transparent 45%),
+        #080d22;
+    }
+
+    .star-map::before {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px dashed rgba(195, 178, 255, .2);
+      border-radius: 50%;
+      animation: rotateSlow 32s linear infinite;
+    }
+
+    .star-point {
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      border: 0;
+      border-radius: 50%;
+      background: #4c5276;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .star-point::before {
+      content: "";
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .star-point.unlocked {
+      background: white;
+      box-shadow: 0 0 8px white, 0 0 22px var(--purple);
+    }
+
+    .star-point:hover {
+      transform: scale(1.6);
+    }
+
+    .star-log {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .log-item {
+      padding: 15px;
+      border-left: 3px solid var(--purple);
+      border-radius: 9px;
+      background: rgba(23, 30, 66, .8);
+    }
+
+    .castle {
+      min-height: 420px;
+      position: relative;
+      overflow: hidden;
+      border: 4px solid #6d5da6;
+      border-radius: 10px;
+      background:
+        linear-gradient(#151b43 0 65%, #282454 65% 100%);
+      image-rendering: pixelated;
+    }
+
+    .castle::before {
+      content: "✦       ✧          ✦       ✧\A    ✧          ✦";
+      white-space: pre;
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      color: var(--purple);
+      font-size: 18px;
+      line-height: 2.4;
+      opacity: .8;
+    }
+
+    .castle::after {
+      content: "       🏰";
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      transform: translate(-50%, -50%);
+      font-size: 120px;
+      filter: drop-shadow(0 0 18px rgba(195, 178, 255, .4));
+    }
+
+    .player {
+      position: absolute;
+      z-index: 3;
+      transform: translate(-50%, -50%);
+      font-size: 27px;
+      transition: left .18s, top .18s;
+    }
+
+    .fragment {
+      position: absolute;
+      z-index: 4;
+      padding: 4px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: 23px;
+      animation: twinkle 1.2s ease-in-out infinite;
+    }
+
+    .direction-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 62px);
+      grid-template-rows: repeat(2, 58px);
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .direction-pad button {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--white);
+      background: rgba(195, 178, 255, .15);
+      cursor: pointer;
+      font-size: 25px;
+    }
+
+    .direction-pad button:active {
+      transform: scale(.9);
+    }
+
+    .direction-pad .up {
+      grid-column: 2;
+    }
+
+    .direction-pad .left {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .direction-pad .down {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .direction-pad .right {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    .memorial-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .memorial-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 18px;
+    }
+
+    .days-left {
+      flex: 0 0 auto;
+      color: var(--pink);
+      font-family: var(--pixel);
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .id-card {
+      overflow: hidden;
+      padding: 25px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #6254b8, #c35e99);
+      box-shadow: 0 0 30px rgba(195, 178, 255, .3);
+    }
+
+    .id-number {
+      margin: 22px 0;
+      color: white;
+      font-family: var(--pixel);
+      font-size: clamp(20px, 6vw, 35px);
+      letter-spacing: 3px;
+    }
+
+    .center-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .center-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: rgba(23, 30, 66, .8);
+    }
+
+    .modal-layer {
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(3, 5, 18, .76);
+      backdrop-filter: blur(9px);
+    }
+
+    .modal-layer.show {
+      display: grid;
+      animation: fade .25s ease both;
+    }
+
+    .modal {
+      position: relative;
+      width: min(550px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      padding: 23px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #151b3a;
+      box-shadow: 0 0 38px rgba(195, 178, 255, .35);
+      animation: modalIn .3s ease both;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .preview-image {
+      max-height: 65vh;
+      margin-top: 18px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    footer {
+      padding: 24px 18px 32px;
+      border-top: 1px solid var(--line);
+      color: var(--dim);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 15;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 9px 4px calc(9px + env(safe-area-inset-bottom));
+      background: rgba(11, 16, 38, .92);
+      border-top: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+
+    .bottom-nav button {
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .bottom-nav button span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 19px;
+    }
+
+    .bottom-nav button:hover {
+      color: var(--pink);
+    }
+
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(.94) translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: .5; transform: scale(.85); }
+      50% { opacity: 1; transform: scale(1.12); }
+    }
+
+    @keyframes starMove {
+      from { transform: translateY(0); }
+      to { transform: translateY(-80px); }
+    }
+
+    @keyframes nebula {
+      from { transform: translateX(-3%) rotate(-2deg); }
+      to { transform: translateX(3%) rotate(2deg); }
+    }
+
+    @keyframes rotateSlow {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-photo {
+        order: -1;
+        min-height: 330px;
+      }
+
+      .hero-photo img {
+        min-height: 330px;
+      }
+
+      .quick-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .quotes {
+        grid-template-columns: 1fr;
+      }
+
+      .support-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .support-links a:last-child {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 9px;
+      }
+
+      .topbar {
+        padding: 0 12px;
+      }
+
+      .hero-title {
+        font-size: 31px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .quick-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .quick-card {
+        min-height: 82px;
+      }
+
+      .quick-card span:last-child {
+        font-size: 10px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .countdown {
+        gap: 5px;
+      }
+
+      .countdown-item {
+        padding: 13px 3px;
+      }
+
+      .countdown-item strong {
+        font-size: 16px;
+      }
+
+      .cake-icon {
+        font-size: 90px;
+      }
+
+      .star-map {
+        min-height: 360px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <button class="menu-btn" onclick="showView('home')">☰</button>
+    <div class="brand">🐰 MATSUMI FAN SITE</div>
+    <div class="top-actions">
+      <button class="icon-btn" onclick="showView('messages')">🔔</button>
+      <button class="icon-btn" onclick="showView('center')">♡</button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- 首页 -->
+    <section id="home" class="view active">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">ANNYX · ULTIMAIDOLS PRODUCTION</p>
+
+          <div class="hero-title">
+            松弥
+            <span>MATSUMI</span>
+          </div>
+
+          <div class="slogan">「夢の形に泣いちゃった」</div>
+
+          <p>
+            上海的粉色担当，代表 Emoji 为粉色垂耳兔 🐰。
+            这里是属于松弥 Matsumi 的非官方粉丝应援站。
+          </p>
+
+          <div class="hero-buttons">
+            <button class="btn pink" onclick="showView('birthday')">
+              🎂 生日页面
+            </button>
+            <button class="btn" onclick="showView('profile')">
+              查看档案
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-photo">
+          <img src="images/1.jpg" alt="松弥 Matsumi 首页照片"
+            onerror="this.style.display='none'">
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="homeDays">--</strong>
+          <small>距离生日</small>
+        </div>
+        <div class="stat">
+          <strong>🐰</strong>
+          <small>代表符号</small>
+        </div>
+        <div class="stat">
+          <strong>2025</strong>
+          <small>出道年份</small>
+        </div>
+        <div class="stat">
+          <strong>∞</strong>
+          <small>幸运指数</small>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <p class="eyebrow">QUICK ACCESS</p>
+        <h2>星际入口</h2>
+      </div>
+
+      <div class="quick-grid">
+        <button class="quick-card" onclick="showView('album')">
+          <span class="emoji">📸</span><span>拍立得次数</span>
+        </button>
+        <button class="quick-card" onclick="showView('birthday')">
+          <span class="emoji">🎂</span><span>生日</span>
+        </button>
+        <button class="quick-card" onclick="showView('album')">
+          <span class="emoji">🖼️</span><span>拍立得相册</span>
+        </button>
+        <button class="quick-card" onclick="showView('center')">
+          <span class="emoji">🍀</span><span>幸运</span>
+        </button>
+        <button class="quick-card" onclick="showView('memorial')">
+          <span class="emoji">📅</span><span>纪念日</span>
+        </button>
+        <button class="quick-card" onclick="showView('blessing')">
+          <span class="emoji">💌</span><span>祝福墙</span>
+        </button>
+        <button class="quick-card" onclick="showView('album')">
+          <span class="emoji">🌌</span><span>照片墙</span>
+        </button>
+        <button class="quick-card" onclick="showView('profile')">
+          <span class="emoji">🐰</span><span>关于 Matsumi</span>
+        </button>
+        <button class="quick-card" onclick="showView('messages')">
+          <span class="emoji">🔔</span><span>消息</span>
+        </button>
+        <button class="quick-card" onclick="showView('center')">
+          <span class="emoji">👤</span><span>个人资料</span>
+        </button>
+        <button class="quick-card" onclick="showMusic()">
+          <span class="emoji">🎵</span><span>音乐</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 档案页 -->
+    <section id="profile" class="view">
+      <div class="section-head">
+        <p class="eyebrow">PROFILE</p>
+        <h1>偶像档案</h1>
+      </div>
+
+      <div class="profile-grid">
+        <div class="profile-photo">
+          <img src="images/2.jpg" alt="松弥 Matsumi 偶像照片"
+            onerror="this.style.display='none'">
+        </div>
+
+        <div class="card">
+          <p class="eyebrow">PINK RABBIT MEMBER</p>
+          <h2>松弥 Matsumi 🐰</h2>
+          <p style="margin-top:10px;">
+            ANNYX 粉色担当 · 上海
+          </p>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <b>所属团体</b>
+              <span>ANNYX</span>
+            </div>
+            <div class="info-item">
+              <b>所属企划</b>
+              <span>UltimaIdols Production</span>
+            </div>
+            <div class="info-item">
+              <b>生日</b>
+              <span>9月7日</span>
+            </div>
+            <div class="info-item">
+              <b>出道日</b>
+              <span>2025年1月18日</span>
+            </div>
+            <div class="info-item">
+              <b>所在地</b>
+              <span>上海</span>
+            </div>
+            <div class="info-item">
+              <b>应援色</b>
+              <span>粉色担当</span>
+            </div>
+            <div class="info-item">
+              <b>技能</b>
+              <span>唱歌、跳舞、画画、配音</span>
+            </div>
+            <div class="info-item">
+              <b>爱好</b>
+              <span>画画、配音、一切很萌的东西</span>
+            </div>
+          </div>
+
+          <div class="quote">“夢の形に泣いちゃった”</div>
+
+          <a
+            class="btn pink"
+            href="https://weibo.com/7973471257/5341691676197907"
+            target="_blank"
+            style="margin-top:18px">
+            查看微博原文
+          </a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <p class="eyebrow">ANNYX MEMBER</p>
+        <h2>成员展示</h2>
+
+        <div class="quick-grid" style="margin-top:18px">
+          <div class="quick-card">
+            <span class="emoji">✦</span>
+            <span>成员资料待补充</span>
+          </div>
+          <div class="quick-card">
+            <span class="emoji">✦</span>
+            <span>成员资料待补充</span>
+          </div>
+          <div class="quick-card" style="border-color:var(--pink);box-shadow:var(--shadow)">
+            <span class="emoji">🐰</span>
+            <span>松弥 Matsumi</span>
+          </div>
+          <div class="quick-card">
+            <span class="emoji">✦</span>
+            <span>成员资料待补充</span>
+          </div>
+          <div class="quick-card">
+            <span class="emoji">✦</span>
+            <span>成员资料待补充</span>
+          </div>
+          <div class="quick-card">
+            <span class="emoji">✦</span>
+            <span>成员资料待补充</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:30px">
+        <p class="eyebrow">GROWTH STORY</p>
+        <h2>成长时间线</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2025.01.18</div>
+          <h3>ANNYX 首演出道</h3>
+          <p>ANNYX 于 IDOLKINGDOM Vol.2 完成首演，松弥正式开启偶像生涯。</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2025 — 2026</div>
+          <h3>舞台活动持续积累</h3>
+          <p>参加团体舞台、LIVE 活动以及粉丝互动，积累更多演出经验。</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">09.07</div>
+          <h3>松弥生日纪念日</h3>
+          <p>属于粉色垂耳兔的特别纪念日。</p>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:30px">
+        <p class="eyebrow">QUOTES</p>
+        <h2>语录合集</h2>
+      </div>
+
+      <div class="quotes">
+        <div class="card quote-card">
+          <p>“夢の形に泣いちゃった”</p>
+          <small>微博语句</small>
+        </div>
+        <div class="card quote-card">
+          <p>“希望每一次见面都能成为特别的回忆。”</p>
+          <small>待补充出处</small>
+        </div>
+        <div class="card quote-card">
+          <p>“今天也要一起发出粉色电波。”</p>
+          <small>待补充出处</small>
+        </div>
+      </div>
+
+      <button class="btn pink" style="margin-top:20px" onclick="openModal('secretModal')">
+        ✦ 偶像小秘密
+      </button>
+    </section>
+
+    <!-- 生日页 -->
+    <section id="birthday" class="view birthday-page">
+      <div class="birthday-head">
+        <p class="eyebrow">MATSUMI BIRTHDAY</p>
+        <h1>Pink Rabbit Radio</h1>
+        <p style="margin-top:12px">9月7日 · 粉色垂耳兔的特别纪念日</p>
+      </div>
+
+      <div class="countdown-box card">
+        <p>距离松弥生日还有</p>
+        <div class="countdown">
+          <div class="countdown-item">
+            <strong id="days">--</strong><span>天</span>
+          </div>
+          <div class="countdown-item">
+            <strong id="hours">--</strong><span>时</span>
+          </div>
+          <div class="countdown-item">
+            <strong id="minutes">--</strong><span>分</span>
+          </div>
+          <div class="countdown-item">
+            <strong id="seconds">--</strong><span>秒</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cake-area">
+        <button class="cake" onclick="openWeibo()">
+          <span class="cake-icon">🎂</span>
+          <span class="cake-hint">CLICK CAKE TO OPEN WEIBO</span>
+        </button>
+      </div>
+
+      <div class="support-links">
+        <a href="#" onclick="placeholderLink('周边购买');return false;">🛍️ 周边购买</a>
+        <a href="#" onclick="placeholderLink('门票购买');return false;">🎫 门票购买</a>
+        <a href="#" onclick="placeholderLink('应援');return false;">💗 应援</a>
+        <a href="#" onclick="placeholderLink('无料');return false;">🎁 无料</a>
+        <a href="https://www.amap.com/search?query=上海MAO%20Livehouse" target="_blank">📍 场地导航</a>
+      </div>
+
+      <div class="card" style="max-width:850px;margin:25px auto 0;text-align:center">
+        <h3>写下给松弥的生日祝福 💌</h3>
+        <p style="margin:8px 0 15px">让每一句祝福都变成星星。</p>
+        <button class="btn pink" onclick="showView('blessing')">前往祝福墙</button>
+      </div>
+    </section>
+
+    <!-- 相册页 -->
+    <section id="album" class="view">
+      <div class="section-head">
+        <p class="eyebrow">ALBUM</p>
+        <h1>拍立得相册</h1>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-category="all">全部</button>
+        <button class="tab" data-category="stage">舞台</button>
+        <button class="tab" data-category="daily">日常</button>
+        <button class="tab" data-category="birthday">生日</button>
+      </div>
+
+      <div id="albumGrid" class="album-grid"></div>
+
+      <button class="floating-submit" onclick="openModal('photoModal')">＋</button>
+    </section>
+
+    <!-- 祝福墙 -->
+    <section id="blessing" class="view">
+      <div class="section-head">
+        <p class="eyebrow">BLESSING WALL</p>
+        <h1>祝福投递</h1>
+        <p>写下送给松弥的话，让它在星际中被看见。</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active">文字祝福</button>
+        <button class="tab" onclick="openModal('photoModal')">图片祝福</button>
+        <button class="tab" onclick="placeholderLink('语音祝福')">语音祝福</button>
+      </div>
+
+      <div class="card">
+        <form id="blessingForm" class="blessing-form">
+          <input id="blessingName" placeholder="你的昵称">
+          <textarea id="blessingText" placeholder="写下想对松弥说的话……"></textarea>
+          <button class="btn pink" type="submit">✨ 投递祝福</button>
+        </form>
+      </div>
+
+      <div id="blessingList" class="blessing-list"></div>
+    </section>
+
+    <!-- 星图 -->
+    <section id="stars" class="view">
+      <div class="section-head">
+        <p class="eyebrow">STAR MAP</p>
+        <h1>星图·观星台</h1>
+        <p>点击星星，解锁松弥偶像生涯中的记忆。</p>
+      </div>
+
+      <div id="starMap" class="star-map"></div>
+
+      <div class="section-head" style="margin-top:28px">
+        <h2>观察日志</h2>
+      </div>
+
+      <div id="starLogs" class="star-log"></div>
+    </section>
+
+    <!-- 月亮城堡 -->
+    <section id="castle" class="view">
+      <div class="section-head">
+        <p class="eyebrow">MOON CASTLE</p>
+        <h1>月亮城堡</h1>
+        <p>操控小兔收集散落在城堡里的兔兔碎片。</p>
+      </div>
+
+      <div class="card">
+        <p style="text-align:center">兔兔碎片：<b id="fragmentCount">0</b> / 3</p>
+
+        <div id="castle" class="castle">
+          <div id="player" class="player" style="left:50%;top:82%">🐰</div>
+          <button class="fragment" data-x="24" data-y="30" style="left:24%;top:30%">✦</button>
+          <button class="fragment" data-x="72" data-y="41" style="left:72%;top:41%">✦</button>
+          <button class="fragment" data-x="45" data-y="65" style="left:45%;top:65%">✦</button>
+        </div>
+
+        <div class="direction-pad">
+          <button class="up" data-direction="up">↑</button>
+          <button class="left" data-direction="left">←</button>
+          <button class="down" data-direction="down">↓</button>
+          <button class="right" data-direction="right">→</button>
+        </div>
+
+        <button class="btn" style="display:flex;margin:18px auto 0" onclick="showView('home')">
+          退出城堡
+        </button>
+      </div>
+    </section>
+
+    <!-- 纪念日 -->
+    <section id="memorial" class="view">
+      <div class="section-head" style="display:flex;align-items:end;justify-content:space-between;gap:15px">
+        <div>
+          <p class="eyebrow">MEMORIAL DAYS</p>
+          <h1>星际纪念日</h1>
+        </div>
+        <button class="btn pink" onclick="openModal('memorialModal')">＋ 新增</button>
+      </div>
+
+      <div id="memorialList" class="memorial-list"></div>
+    </section>
+
+    <!-- 消息 -->
+    <section id="messages" class="view">
+      <div class="section-head">
+        <p class="eyebrow">MESSAGES</p>
+        <h1>消息</h1>
+      </div>
+
+      <div class="center-list">
+        <div class="center-row">
+          <span>🐰 欢迎来到松弥的星际站点</span>
+          <small>NEW</small>
+        </div>
+        <div class="center-row">
+          <span>🎂 生日页面已经开放</span>
+          <small>INFO</small>
+        </div>
+        <div class="center-row">
+          <span>✨ 星图中有新的星星等待解锁</span>
+          <small>STAR</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- 个人中心 -->
+    <section id="center" class="view">
+      <div class="section-head">
+        <p class="eyebrow">USER CENTER</p>
+        <h1>个人中心</h1>
+      </div>
+
+      <div class="id-card">
+        <p>松弥星际观测员</p>
+        <div class="id-number">MST-0907</div>
+        <p>粉色垂耳兔 · FAN ARCHIVE MEMBER</p>
+      </div>
+
+      <div class="center-list">
+        <div class="center-row">
+          <span>💌 我的祝福</span>
+          <b id="myBlessingCount">0</b>
+        </div>
+        <div class="center-row">
+          <span>🌟 已解锁星星</span>
+          <b id="myStarCount">1</b>
+        </div>
+        <div class="center-row">
+          <span>🐰 兔兔碎片</span>
+          <b id="myFragmentCount">0 / 3</b>
+        </div>
+        <div class="center-row">
+          <span>⚙️ 设置</span>
+          <button class="btn" onclick="openModal('settingsModal')">打开</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button onclick="showView('home')"><span>⌂</span>首页</button>
+    <button onclick="showView('profile')"><span>🐰</span>档案</button>
+    <button onclick="showView('birthday')"><span>🎂</span>生日</button>
+    <button onclick="showView('blessing')"><span>💌</span>祝福</button>
+    <button onclick="showView('center')"><span>♡</span>我的</button>
+  </nav>
+
+  <footer>
+    本网站为松弥 Matsumi 粉丝非官方应援站，所有内容仅用于粉丝交流与个人收藏。<br>
+    © Matsumi Fan Archive
+  </footer>
+
+  <!-- 小秘密弹窗 -->
+  <div id="secretModal" class="modal-layer" onclick="closeOutside(event, this)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('secretModal')">×</button>
+      <p class="eyebrow">SECRET UNLOCKED</p>
+      <h2>偶像小秘密</h2>
+      <p style="margin-top:15px">
+        松弥喜欢画画、配音，以及一切很萌的东西。
+        这颗小秘密星星正在等待更多真实资料补充。
+      </p>
+    </div>
+  </div>
+
+  <!-- 图片上传弹窗 -->
+  <div id="photoModal" class="modal-layer" onclick="closeOutside(event, this)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('photoModal')">×</button>
+      <p class="eyebrow">PHOTO SUBMISSION</p>
+      <h2>提交照片</h2>
+      <p style="margin:12px 0">第一版为演示功能，正式版本可接入图片存储。</p>
+      <input type="text" placeholder="照片标题">
+      <input type="file" accept="image/*">
+      <button class="btn pink" style="margin-top:15px" onclick="submitDemo('照片投稿')">
+        提交照片
+      </button>
+    </div>
+  </div>
+
+  <!-- 纪念日弹窗 -->
+  <div id="memorialModal" class="modal-layer" onclick="closeOutside(event, this)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('memorialModal')">×</button>
+      <p class="eyebrow">ADD MEMORIAL DAY</p>
+      <h2>新增纪念日</h2>
+
+      <input id="memorialTitle" type="text" placeholder="纪念日名称">
+      <input id="memorialDate" type="date">
+      <button class="btn pink" style="margin-top:15px" onclick="addMemorial()">
+        保存纪念日
+      </button>
+    </div>
+  </div>
+
+  <!-- 设置弹窗 -->
+  <div id="settingsModal" class="modal-layer" onclick="closeOutside(event, this)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('settingsModal')">×</button>
+      <p class="eyebrow">SETTINGS</p>
+      <h2>站点设置</h2>
+      <label style="display:block;margin-top:18px;color:var(--muted)">
+        昵称
+      </label>
+      <input id="nicknameSetting" placeholder="粉色垂耳兔">
+      <label style="display:flex;align-items:center;gap:8px;margin-top:15px;color:var(--muted)">
+        <input id="effectSetting" type="checkbox" checked style="width:auto">
+        开启星光效果
+      </label>
+      <button class="btn pink" style="margin-top:18px" onclick="saveSettings()">
+        保存设置
+      </button>
+    </div>
+  </div>
+
+  <!-- 大图预览 -->
+  <div id="previewModal" class="modal-layer" onclick="closeOutside(event, this)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('previewModal')">×</button>
+      <h2 id="previewTitle">照片预览</h2>
+      <img id="previewImage" class="preview-image" src="" alt="照片预览">
+    </div>
+  </div>
+
+  <script>
+    const weiboUrl = "https://weibo.com/7973471257/5341691676197907";
+
+    const photoData = [
+      {
+        title: "松弥 Matsumi",
+        category: "all",
+        image: "images/1.jpg"
+      },
+      {
+        title: "偶像档案",
+        category: "daily",
+        image: "images/2.jpg"
+      },
+      {
+        title: "成长记录",
+        category: "stage",
+        image: "images/3.jpg"
+      },
+      {
+        title: "粉色垂耳兔",
+        category: "birthday",
+        image: "images/4.jpg"
+      },
+      {
+        title: "ANNYX 舞台",
+        category: "stage",
+        image: "images/1.jpg"
+      },
+      {
+        title: "生日特别记录",
+        category: "birthday",
+        image: "images/2.jpg"
+      }
+    ];
+
+    const starData = [
+      {
+        id: 1,
+        title: "ANNYX 首演出道",
+        date: "2025.01.18",
+        content: "ANNYX 于 IDOLKINGDOM Vol.2 完成首演。",
+        x: 20,
+        y: 29,
+        unlocked: true
+      },
+      {
+        id: 2,
+        title: "粉色垂耳兔",
+        date: "MATSUMI",
+        content: "松弥的代表 Emoji：🐰，应援色为粉色担当。",
+        x: 68,
+        y: 24,
+        unlocked: false
+      },
+      {
+        id: 3,
+        title: "生日特别 LIVE",
+        date: "2026",
+        content: "属于松弥的生日主题活动记录。",
+        x: 46,
+        y: 67,
+        unlocked: false
+      },
+      {
+        id: 4,
+        title: "梦的形状",
+        date: "微博语句",
+        content: "夢の形に泣いちゃった。",
+        x: 80,
+        y: 72,
+        unlocked: false
+      }
+    ];
+
+    let player = {
+      x: 50,
+      y: 82
+    };
+
+    let blessings = JSON.parse(localStorage.getItem("matsumiBlessings") || "[]");
+    let memorials = JSON.parse(localStorage.getItem("matsumiMemorials") || "[]");
+    let unlockedStars = JSON.parse(localStorage.getItem("matsumiStars") || "[1]");
+    let collectedFragments = Number(localStorage.getItem("matsumiFragments") || 0);
+
+    function showView(id) {
+      document.querySelectorAll(".view").forEach(view => {
+        view.classList.remove("active");
+      });
+
+      const target = document.getElementById(id);
+
+      if (target) {
+        target.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      if (id === "album") renderAlbum("all");
+      if (id === "blessing") renderBlessings();
+      if (id === "stars") renderStars();
+      if (id === "memorial") renderMemorials();
+      if (id === "center") updateCenter();
+    }
+
+    function openWeibo() {
+      window.open(weiboUrl, "_blank");
+      createSparkles();
+    }
+
+    function placeholderLink(name) {
+      alert(name + "链接暂未设置，之后可以在代码中替换为真实链接。");
+    }
+
+    function submitDemo(name) {
+      alert(name + "功能已触发。正式版本可以接入数据库或云存储。");
+      closeModal("photoModal");
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add("show");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("show");
+    }
+
+    function closeOutside(event, layer) {
+      if (event.target === layer) {
+        layer.classList.remove("show");
+      }
+    }
+
+    function createSparkles() {
+      for (let i = 0; i < 16; i++) {
+        const star = document.createElement("span");
+        star.textContent = "✦";
+        star.style.position = "fixed";
+        star.style.zIndex = "100";
+        star.style.left = "50%";
+        star.style.top = "50%";
+        star.style.color = i % 2 ? "#f5a8d0" : "#c3b2ff";
+        star.style.fontSize = "20px";
+        star.style.pointerEvents = "none";
+        document.body.appendChild(star);
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 80 + Math.random() * 180;
+
+        star.animate([
+          {
+            transform: "translate(-50%, -50%) scale(.5)",
+            opacity: 1
+          },
+          {
+            transform:
+              `translate(calc(-50% + ${Math.cos(angle) * distance}px), calc(-50% + ${Math.sin(angle) * distance}px)) scale(1.5)`,
+            opacity: 0
+          }
+        ], {
+          duration: 800 + Math.random() * 400,
+          easing: "ease-out"
+        });
+
+        setTimeout(() => star.remove(), 1400);
+      }
+    }
+
+    function getNextBirthday() {
+      const now = new Date();
+      let target = new Date(
+        now.getFullYear(),
+        8,
+        7,
+        0,
+        0,
+        0
+      );
+
+      if (target <= now) {
+        target = new Date(
+          now.getFullYear() + 1,
+          8,
+          7,
+          0,
+          0,
+          0
+        );
+      }
+
+      return target;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const target = getNextBirthday();
+      const diff = target.getTime() - now.getTime();
+
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor(diff / 3600000) % 24;
+      const minutes = Math.floor(diff / 60000) % 60;
+      const seconds = Math.floor(diff / 1000) % 60;
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+      document.getElementById("homeDays").textContent = days;
+    }
+
+    function renderAlbum(category = "all") {
+      const grid = document.getElementById("albumGrid");
+
+      const filtered = category === "all"
+        ? photoData
+        : photoData.filter(photo => photo.category === category);
+
+      grid.innerHTML = filtered.map((photo, index) => `
+        <div class="photo-card" onclick="previewPhoto('${photo.image}', '${photo.title}')">
+          <img src="${photo.image}" alt="${photo.title}"
+            onerror="this.src='https://picsum.photos/600/${420 + index * 70}?random=${index + 20}'">
+          <div class="photo-caption">${photo.title}</div>
+        </div>
+      `).join("");
+    }
+
+    function previewPhoto(image, title) {
+      document.getElementById("previewTitle").textContent = title;
+      document.getElementById("previewImage").src = image;
+      document.getElementById("previewImage").onerror = function() {
+        this.src = "https://picsum.photos/800/600?random=99";
+      };
+      openModal("previewModal");
+    }
+
+    document.querySelectorAll(".tab[data-category]").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab[data-category]").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        tab.classList.add("active");
+        renderAlbum(tab.dataset.category);
+      });
+    });
+
+    document.getElementById("blessingForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const name = document.getElementById("blessingName").value.trim() || "匿名兔兔";
+      const text = document.getElementById("blessingText").value.trim();
+
+      if (!text) {
+        alert("请先写下祝福内容。");
+        return;
+      }
+
+      blessings.unshift({
+        name,
+        text,
+        time: new Date().toLocaleString("zh-CN")
+      });
+
+      localStorage.setItem("matsumiBlessings", JSON.stringify(blessings));
+
+      document.getElementById("blessingName").value = "";
+      document.getElementById("blessingText").value = "";
+
+      renderBlessings();
+      createSparkles();
+      alert("祝福已投递成功！");
+    });
+
+    function renderBlessings() {
+      const list = document.getElementById("blessingList");
+
+      if (!blessings.length) {
+        list.innerHTML = `
+          <div class="card">
+            <p>还没有祝福，来留下第一句话吧。</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = blessings.map(item => `
+        <div class="card blessing-card">
+          <strong>🐰 ${escapeHtml(item.name)}</strong>
+          <p style="margin-top:8px;color:var(--white)">
+            ${escapeHtml(item.text)}
+          </p>
+          <time>${item.time}</time>
+        </div>
+      `).join("");
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    function renderStars() {
+      const map = document.getElementById("starMap");
+      const logs = document.getElementById("starLogs");
+
+      map.innerHTML = starData.map(star => `
+        <button
+          class="star-point ${unlockedStars.includes(star.id) ? "unlocked" : ""}"
+          style="left:${star.x}%;top:${star.y}%"
+          title="${star.title}"
+          onclick="unlockStar(${star.id})">
+        </button>
+      `).join("");
+
+      const unlocked = starData.filter(star => unlockedStars.includes(star.id));
+
+      logs.innerHTML = unlocked.map(star => `
+        <div class="log-item">
+          <strong style="color:var(--pink)">${star.title}</strong>
+          <small style="display:block;color:var(--dim);margin:5px 0">${star.date}</small>
+          <p>${star.content}</p>
+        </div>
+      `).join("");
+
+      updateCenter();
+    }
+
+    function unlockStar(id) {
+      if (!unlockedStars.includes(id)) {
+        unlockedStars.push(id);
+        localStorage.setItem("matsumiStars", JSON.stringify(unlockedStars));
+        createSparkles();
+      }
+
+      renderStars();
+    }
+
+    function updatePlayer() {
+      const playerElement = document.getElementById("player");
+      playerElement.style.left = player.x + "%";
+      playerElement.style.top = player.y + "%";
+    }
+
+    function movePlayer(direction) {
+      const step = 5;
+
+      if (direction === "left") player.x = Math.max(5, player.x - step);
+      if (direction === "right") player.x = Math.min(95, player.x + step);
+      if (direction === "up") player.y = Math.max(8, player.y - step);
+      if (direction === "down") player.y = Math.min(92, player.y + step);
+
+      updatePlayer();
+      checkFragments();
+    }
+
+    function checkFragments() {
+      document.querySelectorAll(".fragment:not(.hidden)").forEach(fragment => {
+        const fx = Number(fragment.dataset.x);
+        const fy = Number(fragment.dataset.y);
+
+        const distance = Math.sqrt(
+          Math.pow(player.x - fx, 2) +
+          Math.pow(player.y - fy, 2)
+        );
+
+        if (distance < 9) {
+          fragment.classList.add("hidden");
+          collectedFragments++;
+          localStorage.setItem("matsumiFragments", collectedFragments);
+          document.getElementById("fragmentCount").textContent = collectedFragments;
+          document.getElementById("myFragmentCount").textContent = collectedFragments + " / 3";
+          createSparkles();
+
+          if (collectedFragments >= 3) {
+            setTimeout(() => {
+              alert("兔兔碎片已经全部收集完成！\n解锁彩蛋：松弥的粉色电波正在闪烁。");
+            }, 250);
+          }
+        }
+      });
+    }
+
+    document.querySelectorAll("[data-direction]").forEach(button => {
+      button.addEventListener("click", () => {
+        movePlayer(button.dataset.direction);
+      });
+    });
+
+    document.addEventListener("keydown", event => {
+      const keyMap = {
+        ArrowLeft: "left",
+        ArrowRight: "right",
+        ArrowUp: "up",
+        ArrowDown: "down"
+      };
+
+      if (keyMap[event.key]) {
+        movePlayer(keyMap[event.key]);
+      }
+    });
+
+    function getDaysUntil(dateString) {
+      const now = new Date();
+      const target = new Date(dateString + "T00:00:00");
+      const diff = target - now;
+      return Math.max(0, Math.ceil(diff / 86400000));
+    }
+
+    function renderMemorials() {
+      const defaultMemorials = [
+        {
+          title: "松弥生日",
+          date: `${new Date().getFullYear()}-09-07`,
+          emoji: "🎂"
+        },
+        {
+          title: "ANNYX 首演出道",
+          date: "2025-01-18",
+          emoji: "🌟"
+        }
+      ];
+
+      const all = [...defaultMemorials, ...memorials];
+      const list = document.getElementById("memorialList");
+
+      list.innerHTML = all.map(item => `
+        <div class="card memorial-card">
+          <div>
+            <p class="eyebrow">${item.emoji || "✦"} MEMORIAL</p>
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${item.date}</p>
+          </div>
+          <div class="days-left">
+            ${getDaysUntil(item.date)}<br>
+            <span style="font-family:var(--body);font-size:11px">天后</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function addMemorial() {
+      const title = document.getElementById("memorialTitle").value.trim();
+      const date = document.getElementById("memorialDate").value;
+
+      if (!title || !date) {
+        alert("请填写纪念日名称和日期。");
+        return;
+      }
+
+      memorials.push({
+        title,
+        date,
+        emoji: "✦"
+      });
+
+      localStorage.setItem("matsumiMemorials", JSON.stringify(memorials));
+
+      document.getElementById("memorialTitle").value = "";
+      document.getElementById("memorialDate").value = "";
+
+      closeModal("memorialModal");
+      renderMemorials();
+    }
+
+    function updateCenter() {
+      document.getElementById("myBlessingCount").textContent = blessings.length;
+      document.getElementById("myStarCount").textContent = unlockedStars.length;
+      document.getElementById("myFragmentCount").textContent = collectedFragments + " / 3";
+      document.getElementById("fragmentCount").textContent = collectedFragments;
+    }
+
+    function saveSettings() {
+      const nickname = document.getElementById("nicknameSetting").value.trim();
+
+      if (nickname) {
+        localStorage.setItem("matsumiNickname", nickname);
+      }
+
+      const enabled = document.getElementById("effectSetting").checked;
+      document.body.dataset.effects = enabled ? "on" : "off";
+
+      closeModal("settingsModal");
+      alert("设置已保存。");
+    }
+
+    function showMusic() {
+      alert("音乐模块已预留。\n之后可以在 HTML 中加入 audio 音频播放器。");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    renderAlbum("all");
+    renderBlessings();
+    renderStars();
+    renderMemorials();
+    updatePlayer();
+    updateCenter();
+
+    document.querySelectorAll(".fragment").forEach(fragment => {
+      if (collectedFragments >= 1 && fragment.dataset.x === "24") {
+        fragment.classList.add("hidden");
+      }
+
+      if (collectedFragments >= 2 && fragment.dataset.x === "72") {
+        fragment.classList.add("hidden");
+      }
+
+      if (collectedFragments >= 3 && fragment.dataset.x === "45") {
+        fragment.classList.add("hidden");
+      }
+    });
+  </script>
+</body>
+</html>
