@@ -1,2 +1,0 @@
-# Matsumi
-Fan of Matsumi
